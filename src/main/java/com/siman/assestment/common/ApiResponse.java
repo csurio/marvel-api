@@ -1,4 +1,4 @@
-package com.siman.assestment.controller.response;
+package com.siman.assestment.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
