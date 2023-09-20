@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class Image {
+public class ObjImage {
 	private String path;
 	private String extension;
 }

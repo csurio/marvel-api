@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class Url {
+public class ObjPrice {
 	private String type;
-	private String url;
+	private float  price;
 }

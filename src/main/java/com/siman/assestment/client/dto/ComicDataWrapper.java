@@ -6,12 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CharacterDataWrapper extends ObjDataWrapper{
-	private ObjDataContainer<CharacterHero> data;
+public class ComicDataWrapper extends ObjDataWrapper {
+	private ObjDataContainer<Comic> data;
 }

@@ -2,10 +2,12 @@ package com.siman.assestment.controller;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,12 +37,22 @@ public class CharacterController {
     
     @GetMapping
 	public ResponseEntity<?> getAllCharacters(
-			CharactersRequestPagination page,
-			CharactersRequestParams     params 
+								CharactersRequestPagination page,
+								CharactersRequestParams     params 
 			) throws Exception{
     	
     	return ResponseEntity.ok(
     			characterService.getAll(page, params));
+    }
+    
+    @GetMapping("/{characterId}/comics")
+    public ResponseEntity<?> getCharacterIdComics(
+    						@PathVariable Map<String, String>         pathVars,
+    						              CharactersRequestPagination page
+    		)throws Exception{
+    	System.out.println("api/v1/characters/" + String.valueOf(pathVars.get("characterId"))+"/comics");
+    	return ResponseEntity.ok(
+    			characterService.getCharacterIdComics(pathVars, page));
     }
     
     

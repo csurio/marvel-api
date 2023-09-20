@@ -10,7 +10,12 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class CharactersRequestParams {
-	private String name;
+	private String        name;
+	private String        nameStartWith;
 	private List<Integer> comics;
 	private List<Integer> series;
+	private String        format;
+	private String        formatType;
+	private String        title;
+	private String        titleStratWith;
 }

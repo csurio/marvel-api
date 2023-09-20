@@ -11,15 +11,15 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class CharacterHero {
-	private int       id;
-	private String    name;
-	private String    description;
-	private Date      modified;
-	private String    resourceURI;
-	private List<Url> urls;
-	private Image     thumbnail;
-	private ObjList   comics;
-	private ObjList   stories;
-	private ObjList   events;
-	private ObjList   series;
+	private int          id;
+	private String       name;
+	private String       description;
+	private String       modified;
+	private String       resourceURI;
+	private List<ObjUrl> urls;
+	private ObjImage     thumbnail;
+	private ObjList      comics;
+	private ObjList      stories;
+	private ObjList      events;
+	private ObjList      series;
 }
