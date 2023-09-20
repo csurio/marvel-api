@@ -7,8 +7,9 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class Image {
-	private String path;
-	private String extension;
-
+public class PaginationDTO {
+	private int     offset;
+	private int     limit;
+	private int     total;
+	private int     count;
 }

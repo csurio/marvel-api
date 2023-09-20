@@ -3,14 +3,17 @@ package com.siman.assestment.common;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@Builder
+@Getter
+@Setter
 @AllArgsConstructor
-public class ApiResponse<T> {
+@NoArgsConstructor
+public class ApiResponse {
 	
 	private int    code;
 	private String status;
-	private T      data;
 
 }

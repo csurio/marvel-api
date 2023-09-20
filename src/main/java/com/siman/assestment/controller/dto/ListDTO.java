@@ -7,7 +7,9 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class ComicSummary {
-	private String resourceURI;
-	private String name;
+public class ListDTO {
+	private int          available;
+	private int          returned;
+	private String       collectionURI;
+	private SummaryDTO[] items;
 }

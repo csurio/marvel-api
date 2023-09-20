@@ -11,6 +11,6 @@ public class CharacterDTO {
 	private int       id;
 	private String    name;
 	private String    description;
-	private Image     thumbnail;
-	private ComicList comics;
+	private String    thumbnail;
+	private ListDTO   comics;
 }
