@@ -9,7 +9,9 @@ import com.siman.assestment.client.dto.CharacterDataWrapper;
 import com.siman.assestment.client.dto.ComicDataWrapper;
 import com.siman.assestment.controller.request.CharactersRequestPagination;
 import com.siman.assestment.controller.request.CharactersRequestParams;
+import com.siman.assestment.controller.response.CharacterImageResponse;
 import com.siman.assestment.service.CharacterService;
+import com.siman.assestment.service.mapper.CharacterMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class CharacterServiceImpl implements CharacterService{
 	
 	private final MarvelApiClient marvelApiClient;
+	private final CharacterMapper characterMapper;
 
 	@Override
 	public CharacterDataWrapper getAll() 
@@ -45,6 +48,25 @@ public class CharacterServiceImpl implements CharacterService{
 		
 		ComicDataWrapper wrapper = marvelApiClient.getCharacterIdComics(pathVars, page);
 		return wrapper;
+	}
+
+
+	@Override
+	public CharacterImageResponse getCharacterIdImage(
+				Map<String, String> pathVars) 
+			throws Exception {
+		
+		CharacterDataWrapper wrapper = marvelApiClient.getCharacterId(pathVars);
+		
+		CharacterImageResponse response = CharacterImageResponse.builder()
+				.status(wrapper.getStatus())
+				.code(wrapper.getCode())
+				.description(wrapper.getData().getResults().get(0).getDescription())
+				.image(wrapper.getData().getResults().get(0).getThumbnail().getPath()+ "." +
+					   wrapper.getData().getResults().get(0).getThumbnail().getExtension())
+				.build();
+				
+		return response;
 	}
 
 }

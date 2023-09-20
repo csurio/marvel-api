@@ -1,8 +1,5 @@
 package com.siman.assestment.client.impl;
 
-import java.net.URI;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +27,7 @@ public class MarvelApiClientImpl implements MarvelApiClient {
 	private final String       privateKey;
 	private final String       baseUrl;
 	private final String       charactersPath;
+	private final String       charactersIdPath;
 	private final String       charactersComicsPath;
 	private final String       comicsPath;
 	
@@ -38,6 +36,7 @@ public class MarvelApiClientImpl implements MarvelApiClient {
 			@Value("${marvel.api.private-key}")           String privateKey,
 			@Value("${marvel.api.base-url}")              String baseUrl,
 			@Value("${marvel.api.characters.path}")       String charactersPath,
+			@Value("${marvel.api.characters-id.path}")    String charactersIdPath,
 			@Value("${marvel.api.characters-comics.path}")String charactersComicsPath,
 			@Value("${marvel.api.comics.path}")           String comicsPath,
 			RestTemplate restTemplate) {
@@ -46,6 +45,7 @@ public class MarvelApiClientImpl implements MarvelApiClient {
 				this.privateKey           = privateKey;
 				this.baseUrl              = baseUrl;
 				this.charactersPath       = charactersPath;
+				this.charactersIdPath     = charactersIdPath;
 				this.charactersComicsPath = charactersComicsPath;
 				this.comicsPath           = comicsPath;
 				this.restTemplate         = restTemplate;
@@ -88,6 +88,15 @@ public class MarvelApiClientImpl implements MarvelApiClient {
 		
 		String url = buildUrl(this.charactersComicsPath, page, null, pathVars);
 		ComicDataWrapper response = restTemplate.getForObject(url,ComicDataWrapper.class);
+		return response;
+	}
+	
+	@Override
+	public CharacterDataWrapper getCharacterId(
+						Map<String, String> pathVars) 
+								throws Exception {
+		String url = buildUrl(this.charactersIdPath, null, null, pathVars);
+		CharacterDataWrapper response = restTemplate.getForObject(url,CharacterDataWrapper.class);
 		return response;
 	}
 	
@@ -148,6 +157,4 @@ public class MarvelApiClientImpl implements MarvelApiClient {
 	
 		return apiKeyParams;
 	}
-	
-	
 }

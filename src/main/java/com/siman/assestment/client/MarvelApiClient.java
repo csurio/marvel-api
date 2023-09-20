@@ -9,14 +9,30 @@ import com.siman.assestment.controller.request.CharactersRequestParams;
 
 public interface MarvelApiClient {
 	
+	/*
+	 * GET All Characters without filters
+	 */
 	public CharacterDataWrapper getCharacters()
 			throws Exception;
 	
+	/*
+	 * GET All Characters with filters and pagination
+	 */
 	public CharacterDataWrapper getCharacters(
 				CharactersRequestPagination page, 
 				CharactersRequestParams     params)
 			throws Exception;
 	
+	/*
+	 * GET Character by character id
+	 */
+	public CharacterDataWrapper getCharacterId(
+			Map<String, String> pathVars)
+		throws Exception;
+	
+	/*
+	 * GET All Comics of specific character id
+	 */
 	public ComicDataWrapper getCharacterIdComics(
 			Map<String, String>         pathVars,
 			CharactersRequestPagination page)
