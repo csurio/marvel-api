@@ -20,5 +20,4 @@ import lombok.Setter;
 public class CharacterResponse extends ApiResponse {
 	private PaginationDTO      pagination;
 	private List<CharacterDTO> results;
-
 }
