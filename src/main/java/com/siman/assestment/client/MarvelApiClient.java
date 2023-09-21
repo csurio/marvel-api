@@ -5,8 +5,9 @@ import java.util.Map;
 import com.siman.assestment.client.dto.CharacterDataWrapper;
 import com.siman.assestment.client.dto.ComicDataWrapper;
 import com.siman.assestment.common.exception.MarvelApiClientException;
-import com.siman.assestment.controller.request.CharactersRequestPagination;
+import com.siman.assestment.controller.request.PaginationRequestParams;
 import com.siman.assestment.controller.request.CharactersRequestParams;
+import com.siman.assestment.controller.request.ComicsRequestParams;
 
 public interface MarvelApiClient {
 	
@@ -20,7 +21,7 @@ public interface MarvelApiClient {
 	 * GET All Characters with filters and pagination
 	 */
 	public CharacterDataWrapper getCharacters(
-				CharactersRequestPagination page, 
+				PaginationRequestParams page, 
 				CharactersRequestParams     params)
 			throws MarvelApiClientException;
 	
@@ -36,6 +37,28 @@ public interface MarvelApiClient {
 	 */
 	public ComicDataWrapper getCharacterIdComics(
 			Map<String, String>         pathVars,
-			CharactersRequestPagination page)
+			PaginationRequestParams page)
 	throws MarvelApiClientException;
+	
+	
+	/*
+	 * GET All Comics without filters
+	 */
+	public ComicDataWrapper getComics()
+			throws MarvelApiClientException;
+	
+	/*
+	 * GET All Comics with filters and pagination
+	 */
+	public ComicDataWrapper getComics(
+				PaginationRequestParams page, 
+				ComicsRequestParams     params)
+			throws MarvelApiClientException;
+	
+	/*
+	 * GET Comic by character id
+	 */
+	public ComicDataWrapper getComicId(
+			Map<String, String> pathVars)
+		throws MarvelApiClientException;
 }
