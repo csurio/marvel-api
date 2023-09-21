@@ -92,7 +92,7 @@ Follow these steps to set up and run the Marvel API Client locally:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://csurio@bitbucket.org/csurio/marvel-api.git
+   git clone https://github.com/csurio/marvel-api.git
    ```
 
 2. Navigate to the project directory:
