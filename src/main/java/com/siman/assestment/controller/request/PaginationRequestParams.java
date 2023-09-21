@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class CharactersRequestPagination {
+public class PaginationRequestParams {
 	private Integer limit;
 	private Integer offset;
 }
