@@ -2,6 +2,7 @@ package com.siman.assestment.controller;
 
 import java.util.Map;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +33,8 @@ public class CharacterController {
     
     @GetMapping
 	public ResponseEntity<?> getAllCharacters(
-								CharactersRequestPagination page,
-								CharactersRequestParams     params 
+							@ParameterObject CharactersRequestPagination page,
+							@ParameterObject CharactersRequestParams     params 
 			) throws Exception{
     	
     	return ResponseEntity.ok(
@@ -42,8 +43,8 @@ public class CharacterController {
     
     @GetMapping("/{characterId}/comics")
     public ResponseEntity<?> getCharacterIdComics(
-    						@PathVariable Map<String, String>         pathVars,
-    						              CharactersRequestPagination page
+    						@PathVariable    Map<String, String>         pathVars,
+    						@ParameterObject CharactersRequestPagination page
     		)throws Exception{
     	return ResponseEntity.ok(
     			characterService.getCharacterIdComics(pathVars, page));
