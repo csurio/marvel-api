@@ -170,5 +170,3 @@ If you have any questions or need assistance, feel free to contact us at [csurio
 ---
 
 **Marvel API Client** - © 2023 Carlos Surio Developer
-
-git remote add cs https://github.com/csurio/marvel-api.git
