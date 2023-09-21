@@ -3,6 +3,7 @@ package com.siman.assestment.controller;
 import java.util.Map;
 
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,10 @@ import com.siman.assestment.controller.request.CharactersRequestPagination;
 import com.siman.assestment.controller.request.CharactersRequestParams;
 import com.siman.assestment.service.CharacterService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 /** 
@@ -24,6 +29,8 @@ import lombok.RequiredArgsConstructor;
  * @since   19/09/2023
 */
 
+
+@Tag(name="CHARACTERS - Marvel API", description = "Fetch all information for your favorites marvel characters")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/characters")
@@ -31,7 +38,12 @@ public class CharacterController {
 	
 	private final CharacterService characterService;
     
-    @GetMapping
+	@Operation(description="Get all characters with some filters and pagination", summary = "Fetches lists of characters with optional filters.")
+	@ApiResponse(responseCode = "200", description = "OK")
+	@ApiResponse(responseCode = "500", description = "Internal Server Error.", content = @Content)
+	@ApiResponse(responseCode = "400", description = "Bad Request.", content = @Content)
+	@ApiResponse(responseCode = "409", description = "Invalid or unrecognized parameter.", content = @Content)	
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAllCharacters(
 							@ParameterObject CharactersRequestPagination page,
 							@ParameterObject CharactersRequestParams     params 
@@ -41,7 +53,10 @@ public class CharacterController {
     			characterService.getAll(page, params));
     }
     
-    @GetMapping("/{characterId}/comics")
+	@Operation(description="Get comics for specific character id", summary = "Fetches lists of comic of specific characters by id.")
+	@ApiResponse(responseCode = "200", description = "OK")
+	@ApiResponse(responseCode = "409", description = "Invalid or unrecognized parameter.", content = @Content)	
+	@GetMapping(value = "/{characterId}/comics", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCharacterIdComics(
     						@PathVariable    Map<String, String>         pathVars,
     						@ParameterObject CharactersRequestPagination page
@@ -50,29 +65,16 @@ public class CharacterController {
     			characterService.getCharacterIdComics(pathVars, page));
     }
     
-    @GetMapping("/{characterId}/image")
+	
+	@Operation(description="Get image for specific character id", summary = "Fetch description and image url of specific characters by id.")
+	@ApiResponse(responseCode = "200", description = "OK")
+	@ApiResponse(responseCode = "409", description = "Invalid or unrecognized parameter.", content = @Content)	
+	@GetMapping(value = "/{characterId}/image", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCharacterIdImage(
 							@PathVariable Map<String, String> pathVars
 			)throws Exception{
     	return ResponseEntity.ok(
     			characterService.getCharacterIdImage(pathVars));
-}
-    
-    
-    
-    /*
-    @GetMapping("/all")
-	public ResponseEntity<?> getCharacters(
-			@RequestParam(required = false) String  name,
-			@RequestParam(required = false) List<Integer>  stories,
-			@RequestParam(required = false) List<Integer>  series,
-			@RequestParam(required = false) Integer limit,
-			@RequestParam(required = false) Integer offset 
-			) throws Exception{
     	
-    	return ResponseEntity.ok(
-    			characterService.getAll());
     }
-    */
-
 }
