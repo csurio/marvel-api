@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.siman.assestment.controller.request.LoginRequest;
 import com.siman.assestment.controller.request.RegisterRequest;
+import com.siman.assestment.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,17 +25,19 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+	
+	private final AuthService authService;
     
     @PostMapping(value = "login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> login(@RequestBody LoginRequest request)
     {
-        return ResponseEntity.ok("authService.login(request)");
+        return ResponseEntity.ok(authService.login(request));
     }
 
     @PostMapping(value = "register", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@RequestBody RegisterRequest request)
     {
-        return ResponseEntity.ok("authService.register(request)");
+        return ResponseEntity.ok(authService.register(request));
     }
 
 }

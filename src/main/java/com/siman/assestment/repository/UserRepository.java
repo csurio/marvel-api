@@ -9,7 +9,7 @@ import com.siman.assestment.repository.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	Optional<User> findByUsername(final String username);
-	Optional<User> findByPhoneNumber(final String phoneNumber);
+	Optional<User> findByPhone(final String phone);
     Optional<User> findByEmail(final String email);
 
 }

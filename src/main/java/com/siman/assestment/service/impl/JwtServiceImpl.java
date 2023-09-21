@@ -2,6 +2,8 @@ package com.siman.assestment.service.impl;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +13,7 @@ import com.siman.assestment.service.JwtService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,11 @@ import lombok.RequiredArgsConstructor;
 public class JwtServiceImpl implements JwtService {
 	
 	private static final String JWT_SECRET_KEY = "586E3272357538782F413F4428472B4B6250655368566B597033733676397924";
+	
+	@Override
+	public String getToken(UserDetails user) {
+        return getToken(new HashMap<>(), user);
+    }
 
 	@Override
 	public String getUsernameFromToken(String token) {
@@ -31,6 +39,18 @@ public class JwtServiceImpl implements JwtService {
 		final String username=getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername())&& !isTokenExpired(token));
 	}
+	
+	
+	private String getToken(Map<String,Object> extraClaims, UserDetails user) {
+        return Jwts
+            .builder()
+            .setClaims(extraClaims)
+            .setSubject(user.getUsername())
+            .setIssuedAt(new Date(System.currentTimeMillis()))
+            .setExpiration(new Date(System.currentTimeMillis()+1000*60))
+            .signWith(getKey(), SignatureAlgorithm.HS256)
+            .compact();
+    }
 	
 	public <T> T getClaim(String token, Function<Claims,T> claimsResolver)
     {

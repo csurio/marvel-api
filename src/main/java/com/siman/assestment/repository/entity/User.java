@@ -1,8 +1,10 @@
 package com.siman.assestment.repository.entity;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.siman.assestment.common.enums.Role;
@@ -47,9 +49,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String lastname;
     
-    @Enumerated(EnumType.STRING) 
-    private Role role;
-    
     @Column(nullable = false)
     private String password;
     
@@ -59,11 +58,13 @@ public class User implements UserDetails {
     
     @Column(nullable = false)
     private String phone;
+    
+    @Enumerated(EnumType.STRING) 
+    private Role role;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		return List.of(new SimpleGrantedAuthority((role.name())));
 	}
 
 	@Override
