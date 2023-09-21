@@ -13,7 +13,8 @@ import org.springframework.http.HttpStatus;
  */
 public class MarvelApiClientException extends Exception{
   
-    private long id;
+    private static final long serialVersionUID = 1L;
+	private long id;
     private String code;   
     private HttpStatus httpStatus;
     

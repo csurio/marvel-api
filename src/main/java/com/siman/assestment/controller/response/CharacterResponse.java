@@ -2,7 +2,6 @@ package com.siman.assestment.controller.response;
 
 import java.util.List;
 
-import com.siman.assestment.common.ApiResponse;
 import com.siman.assestment.controller.dto.CharacterDTO;
 import com.siman.assestment.controller.dto.PaginationDTO;
 
@@ -17,7 +16,9 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CharacterResponse extends ApiResponse {
+public class CharacterResponse {
+	private int    code;
+	private String status;
 	private PaginationDTO      pagination;
 	private List<CharacterDTO> results;
 }

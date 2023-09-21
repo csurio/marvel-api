@@ -1,6 +1,5 @@
 package com.siman.assestment.client.dto;
 
-import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;

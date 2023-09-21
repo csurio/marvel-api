@@ -9,11 +9,10 @@ import com.siman.assestment.client.dto.CharacterDataWrapper;
 import com.siman.assestment.client.dto.ComicDataWrapper;
 import com.siman.assestment.common.exception.MarvelApiClientException;
 import com.siman.assestment.common.exception.MarvelApiException;
-import com.siman.assestment.controller.request.CharactersRequestPagination;
 import com.siman.assestment.controller.request.CharactersRequestParams;
+import com.siman.assestment.controller.request.PaginationRequestParams;
 import com.siman.assestment.controller.response.CharacterImageResponse;
 import com.siman.assestment.service.CharacterService;
-import com.siman.assestment.service.mapper.CharacterMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 public class CharacterServiceImpl implements CharacterService{
 	
 	private final MarvelApiClient marvelApiClient;
-	private final CharacterMapper characterMapper;
 
 	@Override
 	public CharacterDataWrapper getAll() 
@@ -36,19 +34,16 @@ public class CharacterServiceImpl implements CharacterService{
 
 	
 	@Override
-	public CharacterDataWrapper getAll(
-				CharactersRequestPagination page, 
-				CharactersRequestParams     params)
+	public CharacterDataWrapper getAll(PaginationRequestParams page, CharactersRequestParams params)
 			throws MarvelApiException, MarvelApiClientException {
 		
 		CharacterDataWrapper wrapper = marvelApiClient.getCharacters(page, params);
-		return wrapper;	}
+		return wrapper;	
+	}
 
 	
 	@Override
-	public ComicDataWrapper getCharacterIdComics(
-				Map<String, String>         pathVars, 
-				CharactersRequestPagination page)
+	public ComicDataWrapper getCharacterIdComics(Map<String, String> pathVars, PaginationRequestParams page)
 			throws MarvelApiException, MarvelApiClientException {
 		
 		ComicDataWrapper wrapper = marvelApiClient.getCharacterIdComics(pathVars, page);
@@ -57,8 +52,7 @@ public class CharacterServiceImpl implements CharacterService{
 
 
 	@Override
-	public CharacterImageResponse getCharacterIdImage(
-				Map<String, String> pathVars) 
+	public CharacterImageResponse getCharacterIdImage(Map<String, String> pathVars) 
 			throws MarvelApiException, MarvelApiClientException {
 		
 		CharacterDataWrapper wrapper = marvelApiClient.getCharacterId(pathVars);

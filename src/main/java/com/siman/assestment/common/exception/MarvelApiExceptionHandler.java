@@ -5,7 +5,6 @@
  */
 package com.siman.assestment.common.exception;
 
-import java.io.IOException;
 import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 
@@ -42,32 +41,32 @@ public class MarvelApiExceptionHandler {
 	@ExceptionHandler(UnknownHostException.class)
     public ResponseEntity<ApiExceptionResponse> handleUnknownHostException(UnknownHostException ex) {
         ApiExceptionResponse response = new ApiExceptionResponse("Conection Error","erorr-1024",ex.getMessage());
-        return new ResponseEntity(response, HttpStatus.PARTIAL_CONTENT);
+        return new ResponseEntity<ApiExceptionResponse>(response, HttpStatus.PARTIAL_CONTENT);
     }
     
     @ExceptionHandler(MarvelApiClientException.class)
     public ResponseEntity<ApiExceptionResponse> handleMarvelApiClientException(MarvelApiClientException ex) {
         ApiExceptionResponse response = new ApiExceptionResponse("REST Client Error",ex.getCode(),ex.getMessage());
-        return new ResponseEntity(response, HttpStatus.PARTIAL_CONTENT);
+        return new ResponseEntity<ApiExceptionResponse>(response, HttpStatus.PARTIAL_CONTENT);
     }
     
     @ExceptionHandler(MarvelApiException.class)
     public ResponseEntity<ApiExceptionResponse> handleMarvelApiException(MarvelApiException ex) {
         ApiExceptionResponse response = new ApiExceptionResponse("API Validation Error",ex.getCode(),ex.getMessage());
-        return new ResponseEntity(response, HttpStatus.PARTIAL_CONTENT);
+        return new ResponseEntity<ApiExceptionResponse>(response, HttpStatus.PARTIAL_CONTENT);
     }
     
     
     @ExceptionHandler(NoSuchAlgorithmException.class)
     public ResponseEntity<ApiExceptionResponse> handleMarvelApiException(NoSuchAlgorithmException ex) {
         ApiExceptionResponse response = new ApiExceptionResponse("API Generate key Error","erorr-401",ex.getMessage());
-        return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<ApiExceptionResponse>(response, HttpStatus.UNAUTHORIZED);
     }
     
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiExceptionResponse> handleGenericException(Exception ex) {
         ApiExceptionResponse response = new ApiExceptionResponse("Server Error","erorr-500",ex.getMessage());
-        return new ResponseEntity(response, HttpStatus.PARTIAL_CONTENT);
+        return new ResponseEntity<ApiExceptionResponse>(response, HttpStatus.PARTIAL_CONTENT);
     }
     
 }

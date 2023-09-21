@@ -14,8 +14,4 @@ public class CharactersRequestParams {
 	private String        nameStartWith;
 	private List<Integer> comics;
 	private List<Integer> series;
-	private String        format;
-	private String        formatType;
-	private String        title;
-	private String        titleStratWith;
 }

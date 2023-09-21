@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.siman.assestment.controller.request.CharactersRequestPagination;
+import com.siman.assestment.controller.request.PaginationRequestParams;
 import com.siman.assestment.controller.request.CharactersRequestParams;
 import com.siman.assestment.service.CharacterService;
 
@@ -45,8 +45,8 @@ public class CharacterController {
 	@ApiResponse(responseCode = "409", description = "Invalid or unrecognized parameter.", content = @Content)	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAllCharacters(
-							@ParameterObject CharactersRequestPagination page,
-							@ParameterObject CharactersRequestParams     params 
+							@ParameterObject PaginationRequestParams page,
+							@ParameterObject CharactersRequestParams params 
 			) throws Exception{
     	
     	return ResponseEntity.ok(
@@ -58,8 +58,8 @@ public class CharacterController {
 	@ApiResponse(responseCode = "409", description = "Invalid or unrecognized parameter.", content = @Content)	
 	@GetMapping(value = "/{characterId}/comics", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getCharacterIdComics(
-    						@PathVariable    Map<String, String>         pathVars,
-    						@ParameterObject CharactersRequestPagination page
+    						@PathVariable    Map<String, String>     pathVars,
+    						@ParameterObject PaginationRequestParams page
     		)throws Exception{
     	return ResponseEntity.ok(
     			characterService.getCharacterIdComics(pathVars, page));
