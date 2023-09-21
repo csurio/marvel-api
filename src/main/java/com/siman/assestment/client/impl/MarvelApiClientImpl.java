@@ -1,10 +1,12 @@
 package com.siman.assestment.client.impl;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -14,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.siman.assestment.client.MarvelApiClient;
 import com.siman.assestment.client.dto.CharacterDataWrapper;
 import com.siman.assestment.client.dto.ComicDataWrapper;
+import com.siman.assestment.common.exception.MarvelApiClientException;
 import com.siman.assestment.common.util.MarvelApiUtils;
 import com.siman.assestment.controller.request.CharactersRequestPagination;
 import com.siman.assestment.controller.request.CharactersRequestParams;
@@ -52,7 +55,7 @@ public class MarvelApiClientImpl implements MarvelApiClient {
 	   		}
 
 	@Override
-	public CharacterDataWrapper getCharacters() throws Exception {
+	public CharacterDataWrapper getCharacters() throws MarvelApiClientException {
 		final String endpoint   = StringUtils.join(
         							this.baseUrl, 
         							this.charactersPath);
@@ -71,7 +74,7 @@ public class MarvelApiClientImpl implements MarvelApiClient {
 	public CharacterDataWrapper getCharacters(
 									CharactersRequestPagination page, 
 									CharactersRequestParams     params)
-								throws Exception {
+								throws MarvelApiClientException {
 		
 		String path = this.charactersPath;
 		String url  = buildUrl(path, page, params, new HashMap<String, String>());
@@ -83,7 +86,7 @@ public class MarvelApiClientImpl implements MarvelApiClient {
 	public ComicDataWrapper getCharacterIdComics(
 						Map<String, String>         pathVars, 
 						CharactersRequestPagination page)
-								throws Exception {
+								throws MarvelApiClientException {
 				
 		
 		String url = buildUrl(this.charactersComicsPath, page, null, pathVars);
@@ -94,7 +97,7 @@ public class MarvelApiClientImpl implements MarvelApiClient {
 	@Override
 	public CharacterDataWrapper getCharacterId(
 						Map<String, String> pathVars) 
-								throws Exception {
+								throws MarvelApiClientException {
 		String url = buildUrl(this.charactersIdPath, null, null, pathVars);
 		CharacterDataWrapper response = restTemplate.getForObject(url,CharacterDataWrapper.class);
 		return response;
@@ -102,7 +105,7 @@ public class MarvelApiClientImpl implements MarvelApiClient {
 	
 	
 	private String buildUrl(String path, CharactersRequestPagination page, CharactersRequestParams params,
-			Map<String, String> pathVars) throws Exception {
+			Map<String, String> pathVars) throws MarvelApiClientException {
 
 		String endpoint = StringUtils.join(this.baseUrl, path);
 
@@ -143,13 +146,19 @@ public class MarvelApiClientImpl implements MarvelApiClient {
 	}
 	
 	
-	private MultiValueMap<String, String> getApiKeysParams()throws Exception {
+	private MultiValueMap<String, String> getApiKeysParams() throws MarvelApiClientException {
 		MultiValueMap<String, String> apiKeyParams = new LinkedMultiValueMap<>();
 		String timestamp  = String.valueOf(System.currentTimeMillis());
-		String hashApiKey = MarvelApiUtils.generateMD5(
-										timestamp + 
-										this.privateKey +  
-										this.publicKey);
+		String hashApiKey;
+		
+		try {
+			hashApiKey = MarvelApiUtils.generateMD5(
+											timestamp + 
+											this.privateKey +  
+											this.publicKey);
+		} catch (NoSuchAlgorithmException e) {
+			throw new MarvelApiClientException("401",e.getMessage(),HttpStatus.UNAUTHORIZED);
+		}
 		
 		apiKeyParams.add("ts"    , timestamp);
 		apiKeyParams.add("apikey", publicKey);
