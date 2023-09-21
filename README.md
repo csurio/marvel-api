@@ -101,7 +101,13 @@ Follow these steps to set up and run the Marvel API Client locally:
    cd marvel-api-client
    ```
 
-3. Create a MySQL database (if required) and configure the database connection in `application.properties`:
+3. Conect to MySQL  and create a MySQL database marveldb (if required)
+ 
+   ```properties
+   CREATE DATABASE IF NOT EXISTS marveldb;
+   ```
+
+4. Configure the database connection in `application.properties`:
 
    ```properties
    spring.datasource.url=jdbc:mysql://localhost:3306/marveldb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
@@ -109,13 +115,13 @@ Follow these steps to set up and run the Marvel API Client locally:
    spring.datasource.password=root_password
    ```
 
-4. Build the application using Maven:
+5. Build the application using Maven:
 
    ```bash
    mvn clean install
    ```
 
-5. Start the application:
+6. Start the application:
 
    ```bash
    java -jar target/marvel-api-0.0.1-SNAPSHOT.jar
@@ -164,3 +170,5 @@ If you have any questions or need assistance, feel free to contact us at [csurio
 ---
 
 **Marvel API Client** - © 2023 Carlos Surio Developer
+
+git remote add cs https://github.com/csurio/marvel-api.git
