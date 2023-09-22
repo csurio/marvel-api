@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.siman.assestment.common.ApiExceptionResponse;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.io.IOException;
+
 /**
  *
  * @author Carlos Surio
@@ -36,7 +39,13 @@ import com.siman.assestment.common.ApiExceptionResponse;
  * 
  */
 @RestControllerAdvice
-public class MarvelApiExceptionHandler {       
+public class MarvelApiExceptionHandler {
+	
+	@ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiExceptionResponse> handleGenericException(Exception ex) {
+        ApiExceptionResponse response = new ApiExceptionResponse("Server Error","erorr-500",ex.getMessage());
+        return new ResponseEntity<ApiExceptionResponse>(response, HttpStatus.PARTIAL_CONTENT);
+    }
 	
 	@ExceptionHandler(UnknownHostException.class)
     public ResponseEntity<ApiExceptionResponse> handleUnknownHostException(UnknownHostException ex) {
@@ -63,10 +72,16 @@ public class MarvelApiExceptionHandler {
         return new ResponseEntity<ApiExceptionResponse>(response, HttpStatus.UNAUTHORIZED);
     }
     
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiExceptionResponse> handleGenericException(Exception ex) {
-        ApiExceptionResponse response = new ApiExceptionResponse("Server Error","erorr-500",ex.getMessage());
-        return new ResponseEntity<ApiExceptionResponse>(response, HttpStatus.PARTIAL_CONTENT);
+    
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ApiExceptionResponse> handleExpiredJwtException(ExpiredJwtException ex) {
+        ApiExceptionResponse response = new ApiExceptionResponse("Token Expired","erorr-401",ex.getMessage());
+        return new ResponseEntity<ApiExceptionResponse>(response, HttpStatus.UNAUTHORIZED);
     }
     
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<ApiExceptionResponse> handleExceptionTranslationFilter(IOException ex) {
+        ApiExceptionResponse response = new ApiExceptionResponse("Token Expired","erorr-401",ex.getMessage());
+        return new ResponseEntity<ApiExceptionResponse>(response, HttpStatus.UNAUTHORIZED);
+    }
 }
