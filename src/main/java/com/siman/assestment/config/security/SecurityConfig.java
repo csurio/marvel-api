@@ -1,5 +1,6 @@
 package com.siman.assestment.config.security;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -18,9 +19,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 	
-	private final LoggingFilter           loggingFilter;
-	private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final AuthenticationProvider  authProvider;
+	private final LoggingFilter               loggingFilter;
+	private final JwtAuthenticationFilter     jwtAuthenticationFilter;
+    private final AuthenticationProvider      authProvider;
+    
+    @Qualifier("authenticationApiEntryPoint")
+    private final AuthenticationApiEntryPoint authenticationEntryPoint;
 	
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
@@ -37,6 +41,9 @@ public class SecurityConfig {
             .sessionManagement(sessionManager->
                 sessionManager 
                   .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .exceptionHandling(exceptionHandling ->
+            	exceptionHandling
+            		.authenticationEntryPoint(authenticationEntryPoint))
             .authenticationProvider(authProvider)
 //            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(loggingFilter, UsernamePasswordAuthenticationFilter.class)
