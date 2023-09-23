@@ -36,26 +36,27 @@ Follow these steps to set up and run the Marvel API Client locally:
    ```bash
    git clone https://csurio@bitbucket.org/csurio/marvel-api.git
    ```
-## Deploying to a Local Machine
 
-1. Navigate to the project directory:
+### Deploying to a Local Machine
 
-   ```bash
-   cd marvel-api
-   ```
-
-2. Conect to MySQL  and create a MySQL database marveldb (if required)
+1. Conect to MySQL  and create a MySQL database marveldb (if required)
  
    ```properties
    CREATE DATABASE IF NOT EXISTS marveldb;
    ```
 
-3. Configure the database connection in `application.properties`:
+2. Configure the database connection in `application.properties`:
 
    ```properties
    spring.datasource.url=jdbc:mysql://localhost:3306/marveldb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
    spring.datasource.username=root
    spring.datasource.password=root_password
+   ```
+
+3. Navigate to the project directory:
+
+   ```bash
+   cd marvel-api
    ```
 
 4. Build the application using Maven:
@@ -73,7 +74,7 @@ Follow these steps to set up and run the Marvel API Client locally:
 The Marvel API Client should now be running locally.
 
 
-## Deploying to a Server
+### Deploying to a Server
 
 To deploy the Marvel API Client to a server, follow these general steps:
 
