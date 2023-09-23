@@ -1,4 +1,4 @@
-# Marvel API Client - ReadMe
+# Marvel API Client
 
 ## Overview
 
@@ -19,39 +19,119 @@ Explore the API using the interactive Swagger documentation: [API Documentation]
 - Secure authentication using JSON Web Tokens (JWT).
 - Easy-to-use RESTful endpoints.
 
-## API Endpoints
+## Prerequisites
 
-### Registration
+Before running the Marvel API Client, ensure that you have the following prerequisites installed on your machine:
 
-#### Register a new user:
+- Java 17 or later
+- Maven
+- MySQL database (if required for your configuration)
+
+## Getting Started
+
+Follow these steps to set up and run the Marvel API Client locally:
+
+1. Clone the repository to your local machine:
+
+   ```bash
+   git clone https://csurio@bitbucket.org/csurio/marvel-api.git
+   ```
+
+### Deploying to a Local Machine
+
+1. Conect to MySQL  and create a MySQL database marveldb (if required)
+ 
+   ```properties
+   CREATE DATABASE IF NOT EXISTS marveldb;
+   ```
+
+2. Configure the database connection in `application.properties`:
+
+   ```properties
+   spring.datasource.url=jdbc:mysql://localhost:3306/marveldb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+   spring.datasource.username=root
+   spring.datasource.password=root_password
+   ```
+
+3. Navigate to the project directory:
+
+   ```bash
+   cd marvel-api
+   ```
+
+4. Build the application using Maven:
+
+   ```bash
+   mvn clean install
+   ```
+
+5. Start the application:
+
+   ```bash
+   java -jar target/marvel-api-0.0.1-SNAPSHOT.jar
+   ```
+
+The Marvel API Client should now be running locally.
+
+
+### Deploying to a Server
+
+To deploy the Marvel API Client to a server, follow these general steps:
+
+1. Build the application as described above.
+
+2. Copy the generated JAR file (`marvel-api-0.0.1-SNAPSHOT.jar`) to your server.
+
+3. Ensure that Java 17 (or later) is installed on your server.
+
+4. Configure your server environment (e.g., set environment variables, configure database access).
+
+5. Start the application on your server:
+
+   ```bash
+   java -jar marvel-api-0.0.1-SNAPSHOT.jar.jar
+   ```
+
+The Marvel API Client should now be up and running on your server.
+
+
+## Usage
+
+Once the application is running, you can access the API documentation at `http://localhost:8080/swagger-ui/index.html`, where you can explore and test the available endpoints.
+
+To access secured endpoints, you will need to obtain a JWT token by registering or logging in. 
+Use the token in the `Authorization` header with the value `Bearer your_token` for authentication.
+
+
+### API Endpoints
+
+#### Registration - Register a new user:
 
 - Endpoint: `POST /auth/register`
 - Request Body:
   ```json
   {
-      "username": "admin",
+      "username": "user",
       "password": "123456",
-      "firstname": "Administrator",
+      "firstname": "User",
       "lastname": "Marvel",
-      "email": "admin@marvel.com",
+      "email": "user@marvel.com",
       "phone": "79990001"
   }
   ```
 
-### Authentication
-
-#### Login to obtain JWT token:
+#### Authentication - Login to obtain JWT token:
 
 - Endpoint: `POST /auth/login`
 - Request Body:
   ```json
   {
-      "username": "admin",
-      "password": "admin"
+      "username": "user",
+      "password": "user"
   }
   ```
 
-### Marvel API Endpoints
+#### Marvel API Endpoints
 
 1. Find characters by name, comics, and series:
 
@@ -76,84 +156,6 @@ Explore the API using the interactive Swagger documentation: [API Documentation]
 5. Show a comic filtered by ID:
 
    - Endpoint: `GET /api/v1/comics/{comicId}`
-
-## Prerequisites
-
-Before running the Marvel API Client, ensure that you have the following prerequisites installed on your machine:
-
-- Java 17 or later
-- Maven
-- MySQL database (if required for your configuration)
-
-## Getting Started
-
-Follow these steps to set up and run the Marvel API Client locally:
-
-1. Clone the repository to your local machine:
-
-   ```bash
-   git clone https://csurio@bitbucket.org/csurio/marvel-api.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd marvel-api-client
-   ```
-
-3. Conect to MySQL  and create a MySQL database marveldb (if required)
- 
-   ```properties
-   CREATE DATABASE IF NOT EXISTS marveldb;
-   ```
-
-4. Configure the database connection in `application.properties`:
-
-   ```properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/marveldb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
-   spring.datasource.username=root
-   spring.datasource.password=root_password
-   ```
-
-5. Build the application using Maven:
-
-   ```bash
-   mvn clean install
-   ```
-
-6. Start the application:
-
-   ```bash
-   java -jar target/marvel-api-0.0.1-SNAPSHOT.jar
-   ```
-
-The Marvel API Client should now be running locally.
-
-## Usage
-
-Once the application is running, you can access the API documentation at `http://localhost:8080/swagger-ui/index.html`, where you can explore and test the available endpoints.
-
-To access secured endpoints, you will need to obtain a JWT token by registering or logging in. Use the token in the `Authorization` header with the value `Bearer your_token` for authentication.
-
-## Deploying to a Server
-
-To deploy the Marvel API Client to a server, follow these general steps:
-
-1. Build the application as described above.
-
-2. Copy the generated JAR file (`marvel-api-0.0.1-SNAPSHOT.jar`) to your server.
-
-3. Ensure that Java 17 (or later) is installed on your server.
-
-4. Configure your server environment (e.g., set environment variables, configure database access).
-
-5. Start the application on your server:
-
-   ```bash
-   java -jar marvel-api-0.0.1-SNAPSHOT.jar.jar
-   ```
-
-The Marvel API Client should now be up and running on your server.
 
 ## Contributing
 

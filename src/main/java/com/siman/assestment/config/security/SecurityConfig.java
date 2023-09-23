@@ -1,5 +1,6 @@
 package com.siman.assestment.config.security;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -9,6 +10,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.siman.assestment.common.logging.LoggingFilter;
+
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -16,8 +19,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 	
-	private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final AuthenticationProvider authProvider;
+	private final LoggingFilter               loggingFilter;
+	private final JwtAuthenticationFilter     jwtAuthenticationFilter;
+    private final AuthenticationProvider      authProvider;
+    
+    @Qualifier("authenticationApiEntryPoint")
+    private final AuthenticationApiEntryPoint authenticationEntryPoint;
 	
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
@@ -34,8 +41,13 @@ public class SecurityConfig {
             .sessionManagement(sessionManager->
                 sessionManager 
                   .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .exceptionHandling(exceptionHandling ->
+            	exceptionHandling
+            		.authenticationEntryPoint(authenticationEntryPoint))
             .authenticationProvider(authProvider)
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+//            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(loggingFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterAfter(jwtAuthenticationFilter, LoggingFilter.class)
             .build();    
     }
 }
