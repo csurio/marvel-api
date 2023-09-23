@@ -49,11 +49,8 @@ public class LoggingFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        
-        boolean allowed = isAllowedEndpoint(requestURI);
 
-        if (allowed) {
-        	
+        if (isAllowedEndpoint(requestURI)) {
         	SearchLog search = SearchLog.builder()
         			.username(getUser())
         			.requestDate(requestDate)
